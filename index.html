@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>=^.^=</title>
+<style>
+body{margin: 0;padding: 0; background: #000;}
+canvas{display: block;}
+</style>
+</head>
+<body>
+
+<script src="/lib/three.min.js"></script>
+<script src="/lib/VREffect.js"></script>
+<script src="/lib/VRControls.js"></script>
+<script src="/lib/OrbitControls.js"></script>
+
+<script src="/src/vr/VRWrapper.js"></script>
+<script src="/src/skybox/Skybox.js"></script>
+<script src="/src/dust/Dust.js"></script>
+<script src="/src/cockpit/Cockpit.js"></script>
+<script src="/src/beam/Beam.js"></script>
+<script src="/src/input/Input.js"></script>
+<script src="/src/input/Controller.js"></script>
+
+<script>
+'use strict';
+
+var width, height, clock, scene, cameraContainer, camera, renderer;
+
+width = window.innerWidth;
+height = window.innerHeight;
+clock = new THREE.Clock();
+scene = new THREE.Scene();
+camera = new THREE.PerspectiveCamera( 60, width / height, .1, 1000 );
+// cameraContainer = new THREE.Object3D();
+// cameraContainer.add( camera );
+// scene.add( cameraContainer );
+renderer = new THREE.WebGLRenderer();
+renderer.setSize( width, height );
+document.body.appendChild( renderer.domElement );
+
+var light1 = new THREE.AmbientLight( 0x333333 );
+scene.add( light1 );
+
+var light2 = new THREE.DirectionalLight( 0xcccccc, .5 );
+light2.position.set( 1, 1, 1 ).normalize();
+scene.add( light2 );
+
+
+// ---
+
+var vrWrapper = new VRWrapper( scene, camera, renderer, new THREE.Vector3( 0, 1, 0 ) );
+
+var skybox = new Skybox( 500 );
+scene.add( skybox.object );
+
+
+var dust1 = new Dust( scene.position, 1000,  200 );
+var dust2 = new Dust( scene.position, 2000,  400 );
+var dust3 = new Dust( scene.position, 3000,  600 );
+var dust4 = new Dust( scene.position, 4000,  800 );
+var dust5 = new Dust( scene.position, 5000, 1000 );
+scene.add( dust1.object );
+scene.add( dust2.object );
+scene.add( dust3.object );
+scene.add( dust4.object );
+scene.add( dust5.object );
+
+
+var cockpit = new Cockpit();
+cockpit.addEventListener( 'ready', function () {
+
+  scene.add( cockpit.object );
+  vrWrapper.eyePosition = cockpit.getEyePosition();
+
+//---
+
+
+} );
+
+
+var input = new Input();
+var controller = new Controller( input );
+
+var positionSync = ( function () {
+
+  var offsetSkybox  = skybox.object.position.clone();
+  var offsetCockpit = cockpit.object.position.clone();
+  var offsetCamera  = cockpit.getEyePosition().clone();
+  var matrix = new THREE.Matrix4();
+  var quaternion = new THREE.Quaternion();
+
+  return function () {
+
+    controller.position;
+    controller.frontAngle;
+
+    skybox.object.position.copy( controller.position ).add( offsetSkybox );
+    cockpit.object.position.copy( controller.position ).add( offsetCockpit );
+    camera.position.copy( controller.position ).add( offsetCamera );
+
+    cockpit.object.rotation.y  = controller.frontAngle - THREE.Math.degToRad( -180 );
+    matrix.makeRotationY( controller.frontAngle );
+    quaternion.setFromRotationMatrix ( matrix );
+    camera.quaternion.multiply( quaternion );
+
+  }
+
+} )();
+
+
+;( function update () {
+
+  requestAnimationFrame( update );
+
+  vrWrapper.update();
+  controller.update();
+  positionSync();
+  dust1.update( camera.position );
+  dust2.update( camera.position );
+  dust3.update( camera.position );
+  dust4.update( camera.position );
+  dust5.update( camera.position );
+  Beam.update();
+
+  vrWrapper.render();
+
+} )();
+
+
+// beam stuff
+
+// var pointerPosition = new THREE.Vector2();
+// window.addEventListener( 'mousemove', function ( e ) {
+//
+// }
+
+
+window.addEventListener( 'keypress', function ( e ) {
+
+  if ( e.keyCode === 32 ) { // space key
+
+    var turnRight90 = new THREE.Matrix4().makeRotationY( THREE.Math.degToRad( -90 ) );
+    var direction = controller.direction.clone().normalize();
+
+    var position  = controller.position.clone();
+    var right2 = direction.clone().applyMatrix4( turnRight90 ).multiplyScalar( 2 );
+    position.add( right2 ).add( new THREE.Vector3( 0, 1, 0 ) );
+
+    var beam = new Beam( scene, position, direction );
+
+  }
+
+} );
+
+
+</script>
+
+</body>
+</html>
