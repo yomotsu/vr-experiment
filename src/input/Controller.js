@@ -1,6 +1,6 @@
 var Controller = ( function () {
 
-  var MAX_SPEED = 3;
+  var MAX_SPEED = 20;
   var DEG_180 = THREE.Math.degToRad( 180 );
 
   var Controller = function ( input ) {
@@ -11,7 +11,7 @@ var Controller = ( function () {
     this.frontAngle   = 0;
     this.direction    = new THREE.Vector3( 0, 0, -1 );
     this.speed        = 0;
-    this.acceralation = 0.01;
+    this.acceralation = 0.03;
     this.velocity     = new THREE.Vector3( 0, 0, 0 );
     this.position     = new THREE.Vector3( 0, 0, 0 );
 

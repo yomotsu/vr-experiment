@@ -14,6 +14,7 @@ canvas{display: block;}
 <script src="/lib/VREffect.js"></script>
 <script src="/lib/VRControls.js"></script>
 <script src="/lib/OrbitControls.js"></script>
+<script src="/lib/TPSCameraControl.js"></script>
 <script src="/src/vr/VRWrapper.js"></script>
 <script src="/src/cockpit/Cockpit.js"></script>
 <script>
@@ -55,7 +56,8 @@ var vrWrapper = new VRWrapper( scene, camera, renderer, cockpit.getEyePosition()
 ;( function update () {
 
   requestAnimationFrame( update );
-  vrWrapper.updateAndRender();
+  vrWrapper.update();
+  vrWrapper.render();
 
 } )();
 

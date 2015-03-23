@@ -14,20 +14,21 @@ var VRWrapper = ( function () {
 
       if ( error ) {
 
-        camera.position.copy( eyePosition );
-        that.controls = new THREE.OrbitControls( camera );
-        that.controls.center.copy( camera.position );
-        that.controls.noZoom = true;
-        that.controls.noPan = true;
-        that.position = that.controls.center;
-        camera.position.z += 0.03;
+        that.useHMD = false;
+        var params = {
+          maxRadius: .03,
+          minRadius: .03,
+          radius   : .03,
+          // offset   : eyePosition
+        };
+        that.controls = new TPSCameraControl( camera, new THREE.Object3D(), params );
         return;
 
       } else {
 
+        that.useHMD = true;
         that.controls = new THREE.VRControls( camera );
         that.position = camera.position;
-        that.useHMD = true;
         return;
 
       }
@@ -61,18 +62,6 @@ var VRWrapper = ( function () {
   };
 
   VRWrapper.prototype.render = function () {
-
-    this.vrEffect.render( scene, camera )
-
-  };
-
-  VRWrapper.prototype.updateAndRender = function () {
-
-    if ( !!this.controls ) {
-
-      this.controls.update();
-
-    }
 
     this.vrEffect.render( scene, camera )
 

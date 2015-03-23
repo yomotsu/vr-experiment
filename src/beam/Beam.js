@@ -51,8 +51,9 @@ var Beam = ( function () {
   se[ 1 ].src = '/src/beam/se.' + audioType;
   se[ 2 ].src = '/src/beam/se.' + audioType;
 
-  var Beam = function ( scene, position, direction ) {
+  var Beam = function ( scene, position, direction, speed ) {
 
+    this.deltaClock = new THREE.Clock();
     this.startTime = clock.getElapsedTime();
 
     if ( this.startTime < lastShotTime + COOLTIME * 0.001 ) {
@@ -68,6 +69,7 @@ var Beam = ( function () {
     this.object.position.copy( position );
 
     this.direction = direction;
+    this.speed = 30 + +speed;
 
 
   	var head = new THREE.Mesh(
@@ -101,7 +103,9 @@ var Beam = ( function () {
 
     };
 
-    this.object.position.sub( this.direction.clone().multiplyScalar( -0.3 ) );
+    var distance = -this.speed * this.deltaClock.getDelta();
+
+    this.object.position.sub( this.direction.clone().multiplyScalar( distance ) );
 
   }
 

@@ -18,6 +18,7 @@ var Cockpit = ( function () {
         // new THREE.MeshNormalMaterial()
         new THREE.MeshFaceMaterial( materials )
       );
+      cockpit.position.set( 0, -.4, .1 );
       that.object.add( cockpit );
 
       var sphere = new THREE.Mesh(
