@@ -22,6 +22,8 @@ var Input = ( function () {
     this.isDown  = false;
     this.isLeft  = false;
     this.isRight = false;
+    this.isHigh  = false;
+    this.isLow   = false;
     this.isMoveKeyHolded = false;
 
     this._mousedownListener = onkeydown.bind( this );
@@ -39,23 +41,27 @@ var Input = ( function () {
     switch ( e.keyCode ) {
 
       case KEY_W :
-      case KEY_UP :
         this.isUp = true;
         break;
 
       case KEY_S :
-      case KEY_DOWN :
         this.isDown = true;
         break;
 
       case KEY_A :
-      case KEY_LEFT :
         this.isLeft = true;
         break;
 
       case KEY_D :
-      case KEY_RIGHT :
         this.isRight = true;
+        break;
+
+      case KEY_UP :
+        this.isHigh = true;
+        break;
+
+      case KEY_DOWN :
+        this.isLow = true;
         break;
 
       // case KEY_SPACE :
@@ -82,27 +88,31 @@ var Input = ( function () {
     switch ( e.keyCode ) {
 
       case KEY_W :
-      case KEY_UP :
         this.isUp = false;
         break;
 
       case KEY_S :
-      case KEY_DOWN :
         this.isDown = false;
         break;
 
       case KEY_A :
-      case KEY_LEFT :
         this.isLeft = false;
         break;
 
       case KEY_D :
-      case KEY_RIGHT :
         this.isRight = false;
         break;
 
-      case KEY_SPACE :
+      case KEY_UP :
+        this.isHigh = false;
         break;
+
+      case KEY_DOWN :
+        this.isLow = false;
+        break;
+
+      // case KEY_SPACE :
+      //   break;
 
     }
 

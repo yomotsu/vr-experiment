@@ -118,46 +118,59 @@ cockpit.addEventListener( 'ready', function () {
 var input = new Input();
 var controller = new Controller( input );
 
-var positionSync = ( function () {
+
+var positionSyncVR = ( function () {
 
   var offsetSkybox  = skybox.object.position.clone();
   var offsetCockpit = cockpit.object.position.clone();
   var offsetCamera  = cockpit.getEyePosition().clone();
   var matrix = new THREE.Matrix4();
   var quaternion = new THREE.Quaternion();
+
+  return function () {
+
+    if ( !vrWrapper.useHMD ) { return; }
+
+    skybox.object.position.copy( controller.position ).add( offsetSkybox );
+    cockpit.object.position.copy( controller.position ).add( offsetCockpit );
+    camera.position.copy( controller.position ).add( offsetCamera );
+
+    cockpit.object.rotation.y = controller.frontAngle - THREE.Math.degToRad( -180 );
+
+    matrix.makeRotationY( controller.frontAngle );
+    quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), controller.frontAngle );
+    camera.quaternion.copy( quaternion );
+    camera.quaternion.multiply( vrWrapper.controls.orientation );
+
+  }
+
+} )();
+
+var positionSyncNotVR = ( function () {
+
+  var offsetSkybox  = skybox.object.position.clone();
+  var offsetCockpit = cockpit.object.position.clone();
+  var offsetCamera  = cockpit.getEyePosition().clone();
   var prevFrontAngle = 0;
   var diffAngle = 0;
 
   return function () {
 
+    if ( vrWrapper.useHMD ) { return; }
+
     skybox.object.position.copy( controller.position ).add( offsetSkybox );
     cockpit.object.position.copy( controller.position ).add( offsetCockpit );
+    vrWrapper.controls.trackObject.position.copy( controller.position ).add( offsetCamera );
 
     cockpit.object.rotation.y = controller.frontAngle - THREE.Math.degToRad( -180 );
 
-    if ( vrWrapper.useHMD ) {
+    vrWrapper.controls.setLatLon(
+      vrWrapper.controls.lat,
+      vrWrapper.controls.lon + diffAngle * 57 // magin number... should be changed
+    );
 
-      camera.position.copy( controller.position ).add( offsetCamera );
-
-      matrix.makeRotationY( controller.frontAngle );
-      // quaternion.setFromRotationMatrix( matrix );
-      quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), controller.frontAngle );
-      camera.quaternion.multiply( quaternion );
-
-    } else {
-
-      vrWrapper.controls.trackObject.position.copy( controller.position ).add( offsetCamera );
-
-      vrWrapper.controls.setLatLon(
-        vrWrapper.controls.lat,
-        vrWrapper.controls.lon + diffAngle * 57
-      );
-
-      diffAngle = controller.frontAngle - prevFrontAngle;
-      prevFrontAngle = controller.frontAngle;
-
-
-    }
+    diffAngle = controller.frontAngle - prevFrontAngle;
+    prevFrontAngle = controller.frontAngle;
 
   }
 
@@ -171,8 +184,9 @@ var positionSync = ( function () {
   // 順番変えちゃダメ！
   vrWrapper.update();
   controller.update();
-  positionSync();
+  positionSyncVR();
   vrWrapper.render();
+  positionSyncNotVR();
 
   dust1.update( camera.position );
   dust2.update( camera.position );

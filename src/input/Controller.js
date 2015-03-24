@@ -19,34 +19,54 @@ var Controller = ( function () {
 
   Controller.prototype.update = function () {
 
+    var velocityXZ;
+
     if ( this.input.isUp ) {
 
       // UP key
       this.speed = this.speed < MAX_SPEED ? this.speed + this.acceralation : MAX_SPEED;
-      this.velocity.copy( this.direction.clone().multiplyScalar( this.speed ) );
+      velocityXZ = this.direction.clone().multiplyScalar( this.speed );
+      this.velocity.x = velocityXZ.x;
+      this.velocity.z = velocityXZ.z;
 
     } else if ( this.input.isDown ) {
 
       // DOWN key
       this.speed = this.speed > 0 ? this.speed - this.acceralation * 2.5 : 0;
-      this.velocity.copy( this.direction.clone().multiplyScalar( this.speed ) );
+      velocityXZ = this.direction.clone().multiplyScalar( this.speed );
+      this.velocity.x = velocityXZ.x;
+      this.velocity.z = velocityXZ.z;
 
     }
 
     if ( this.input.isLeft ) {
-// console.log('l')
+
       this.frontAngle += THREE.Math.degToRad( 1 );
       this.direction.x = Math.sin( this.frontAngle + DEG_180 );
       this.direction.z = Math.cos( this.frontAngle + DEG_180 );
 
     } else if ( this.input.isRight ) {
-      // console.log('r')
+
       this.frontAngle -= THREE.Math.degToRad( 1 );
       this.direction.x = Math.sin( this.frontAngle + DEG_180 );
       this.direction.z = Math.cos( this.frontAngle + DEG_180 );
 
     }
-    // console.log(this.direction)
+
+    if ( this.input.isHigh ) {
+
+      this.velocity.y = Math.min( this.velocity.y + .1,  5 );
+
+    } else if ( this.input.isLow ) {
+
+      this.velocity.y = Math.max( this.velocity.y - .1, -5 );
+
+    } else {
+
+      this.velocity.y = this.velocity.y * 0.0001;
+      // console.log(this.velocity.y )
+
+    }
 
     var delta = this.clock.getDelta();
     this.position.add( this.velocity.clone().multiplyScalar( delta ) );
