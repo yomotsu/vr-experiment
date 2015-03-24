@@ -140,7 +140,9 @@ var positionSyncVR = ( function () {
     matrix.makeRotationY( controller.frontAngle );
     quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), controller.frontAngle );
     camera.quaternion.copy( quaternion );
-    camera.quaternion.multiply( vrWrapper.controls.orientation );
+    if ( vrWrapper.controls ) {
+      camera.quaternion.multiply( vrWrapper.controls.orientation );
+    }
 
   }
 
@@ -208,7 +210,7 @@ var positionSyncNotVR = ( function () {
 
 
 window.addEventListener( 'keypress', function ( e ) {
-
+  
   if ( e.keyCode === 32 ) { // space key
 
     var turnRight90 = new THREE.Matrix4().makeRotationY( THREE.Math.degToRad( -90 ) );
