@@ -23,6 +23,7 @@ canvas{display: block;}
 <script src="/src/beam/Beam.js"></script>
 <script src="/src/input/Input.js"></script>
 <script src="/src/input/Controller.js"></script>
+<script src="/src/gearadoga/Gearadoga.js"></script>
 
 <script>
 'use strict';
@@ -38,7 +39,7 @@ renderer = new THREE.WebGLRenderer();
 renderer.setSize( width, height );
 document.body.appendChild( renderer.domElement );
 
-var light1 = new THREE.AmbientLight( 0x333333 );
+var light1 = new THREE.AmbientLight( 0x666666 );
 scene.add( light1 );
 
 var light2 = new THREE.DirectionalLight( 0xcccccc, .5 );
@@ -52,6 +53,44 @@ var vrWrapper = new VRWrapper( scene, camera, renderer, new THREE.Vector3( 0, 1,
 
 var skybox = new Skybox( 500 );
 scene.add( skybox.object );
+
+var gearadogas = [];
+
+if ( !Gearadoga.ready ) {
+
+  Gearadoga.onready = function () {
+
+    for ( var i = 0; i < 5; i ++ ) {
+
+      gearadogas[ i ] = new Gearadoga();
+      // gearadogas[ i ].object.rotation.set( 0, Math.random * 2 * Math.PI, 0 );
+      gearadogas[ i ].object.position.set(
+        Math.random() * 300 - 50,
+        Math.random() * 20 - 10,
+        Math.random() * 300 - 50
+      );
+      scene.add( gearadogas[ i ].object );
+
+    }
+
+  }
+
+} else {
+
+  for ( var i = 0; i < 5; i ++ ) {
+
+    gearadogas[ i ] = new Gearadoga();
+    // gearadogas[ i ].object.rotation.set( 0, Math.random * 2 * Math.PI, 0 );
+    gearadogas[ i ].object.position.set(
+      Math.random() * 300 - 50,
+      Math.random() * 20 - 10,
+      Math.random() * 300 - 50
+    );
+    scene.add( gearadogas[ i ].object );
+
+  }
+
+}
 
 
 var dust1 = new Dust( scene.position,  2000,  400 );
@@ -101,13 +140,13 @@ var positionSync = ( function () {
       camera.position.copy( controller.position ).add( offsetCamera );
 
       matrix.makeRotationY( controller.frontAngle );
-      quaternion.setFromRotationMatrix( matrix );
+      // quaternion.setFromRotationMatrix( matrix );
+      quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), controller.frontAngle );
       camera.quaternion.multiply( quaternion );
 
     } else {
 
       vrWrapper.controls.trackObject.position.copy( controller.position ).add( offsetCamera );
-      // vrWrapper.controls.rotation.set( controller.frontAngle );
 
       vrWrapper.controls.setLatLon(
         vrWrapper.controls.lat,
@@ -129,11 +168,12 @@ var positionSync = ( function () {
 
   requestAnimationFrame( update );
 
+  // 順番変えちゃダメ！
   vrWrapper.update();
   controller.update();
+  positionSync();
   vrWrapper.render();
 
-  positionSync();
   dust1.update( camera.position );
   dust2.update( camera.position );
   dust3.update( camera.position );

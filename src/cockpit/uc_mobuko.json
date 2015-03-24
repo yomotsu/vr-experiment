@@ -70,8 +70,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -87,7 +85,6 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
 		"transparent" : false,
 		"vertexColors" : false
 	},
@@ -104,7 +101,6 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
 		"transparent" : false,
 		"vertexColors" : false
 	},
@@ -121,7 +117,6 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
 		"transparent" : false,
 		"vertexColors" : false
 	},
@@ -138,7 +133,6 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
 		"transparent" : false,
 		"vertexColors" : false
 	},
@@ -155,8 +149,6 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 0.9900000095367432,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -172,8 +164,6 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 0.9900000095367432,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -189,7 +179,6 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
 		"transparent" : false,
 		"vertexColors" : false
 	},
@@ -206,7 +195,6 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
 		"transparent" : false,
 		"vertexColors" : false
 	},
@@ -223,7 +211,6 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
 		"transparent" : false,
 		"vertexColors" : false
 	},
@@ -242,8 +229,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -261,8 +246,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -280,8 +263,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -299,8 +280,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -318,8 +297,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -337,8 +314,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -356,8 +331,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -375,8 +348,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -394,8 +365,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -409,11 +378,8 @@
 		"colorSpecular" : [0.0, 0.0, 0.0],
 		"depthTest" : true,
 		"depthWrite" : true,
-		"mapDiffuse" : "sp.sph",
-		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
 		"transparent" : false,
 		"vertexColors" : false
 	},
@@ -428,11 +394,8 @@
 		"colorSpecular" : [0.0, 0.0, 0.0],
 		"depthTest" : true,
 		"depthWrite" : true,
-		"mapDiffuse" : "sp.sph",
-		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
 		"transparent" : false,
 		"vertexColors" : false
 	},
@@ -451,8 +414,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -470,8 +431,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 1.0,
-		"transparent" : true,
 		"vertexColors" : false
 	},
 
@@ -489,8 +448,6 @@
 		"mapDiffuseWrap" : ["repeat", "repeat"],
 		"shading" : "Lambert",
 		"specularCoef" : 50,
-		"transparency" : 0.9990000128746033,
-		"transparent" : true,
 		"vertexColors" : false
 	}],
 
